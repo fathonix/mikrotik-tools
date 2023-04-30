@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # (C) Kirils Solovjovs, 2015
 
 import sys,base64,zlib
