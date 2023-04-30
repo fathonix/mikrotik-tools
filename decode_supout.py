@@ -16,7 +16,7 @@ def tribit(content):
 	#	content= content + "\x00"
 		
 	result=""
-	for i in xrange(0, len(content) - 1,3):	
+	for i in range(0, len(content) - 1,3):	
 		goodtribit=0
 		badtribit=ord(content[i])*0x10000+ord(content[i+1])*0x100+ord(content[i+2])
 		for mangle in tribitmap:
@@ -59,9 +59,9 @@ with open(sys.argv[1], 'r') as my_file:
 				out = tribit(base64.b64decode(sect.replace("=","A")))
 				
 				[name,zipped]=out.split("\x00",1);
-				print '%02d' % i,name.ljust(23),
+				print('%02d' % i,name.ljust(23), end=' ')
 				if not i%3:
-					print
+					print()
 					
 				res=zlib.decompress(zipped)
 				fo = open(dir+"/"+str(i).zfill(2)+"_"+re.sub('[^a-z0-9\.-]','_',name), "wb")

@@ -36,7 +36,7 @@ class MTConfig(object):
 	@idFormat.setter
 	def idFormat(self, idFormat):
 		
-		for i in map(chr, range(33, 48)):
+		for i in map(chr, list(range(33, 48))):
 			if i not in idFormat:
 				break
 		if i == "0":
@@ -55,7 +55,7 @@ class MTConfig(object):
 		return self
 
 
-	def next(self):
+	def __next__(self):
 		
 		if self.__index is None:
 			try:
@@ -194,7 +194,7 @@ class MTConfig(object):
 				blen, = unpack("B",record[bpointer])
 				bpointer += 1
 				mtype = "r"
-				data = map(ord,record[bpointer:bpointer+blen])
+				data = list(map(ord,record[bpointer:bpointer+blen]))
 			elif btype == 0x08: #int
 				blen = 4
 				data, = unpack("<I",record[bpointer:bpointer+blen])
@@ -203,10 +203,10 @@ class MTConfig(object):
 				blen = 8
 				data, = unpack("<Q",record[bpointer:bpointer+blen])
 				mtype = "q"
-				data = long(data)
+				data = int(data)
 			elif btype == 0x18: #128bit integer
 				blen = 16
-				data = map(ord,record[bpointer:bpointer+blen])
+				data = list(map(ord,record[bpointer:bpointer+blen]))
 				mtype = "a"
 			elif btype == 0x09: # byte
 				blen = 1
@@ -313,24 +313,24 @@ if __name__ == '__main__':
 		conf.preserveOrder = True
 		
 		for record in conf:
-			print "Start of record"
+			print("Start of record")
 			
 			for block in record:
 				(btype,data) = record[block]
-				print "(%02X) %s %s %s%s" % (btype, block, type(data), "{%i} "%len(data) if isinstance(data,(str,list,dict)) else "","" if (btype & 0x28 == 0x28) else data)
+				print("(%02X) %s %s %s%s" % (btype, block, type(data), "{%i} "%len(data) if isinstance(data,(str,list,dict)) else "","" if (btype & 0x28 == 0x28) else data))
 				if btype & 0x28 == 0x28:
 					if btype & 0x80 != 0x80:
 						data=[data]
 					
 					for item in data:
 						if btype & 0x80 == 0x80:
-							print "   -> (%02X) %s %s {%i}" % (btype & ~0x80, block, type(data), len(item))
+							print("   -> (%02X) %s %s {%i}" % (btype & ~0x80, block, type(data), len(item)))
 						for block_s in item:
 							(btype_s,data_s) = item[block_s]
-							print "   "*(2 if (btype & 0x80 == 0x80) else 1)+"-> (%02X) %s %s %s%s" % (btype_s, block_s, type(data_s),"{%i} "%len(data_s) if isinstance(data_s,(str,list,dict)) else "", data_s)
+							print("   "*(2 if (btype & 0x80 == 0x80) else 1)+"-> (%02X) %s %s %s%s" % (btype_s, block_s, type(data_s),"{%i} "%len(data_s) if isinstance(data_s,(str,list,dict)) else "", data_s))
 						
 
-			print "End of record"
-			print
+			print("End of record")
+			print()
 
 

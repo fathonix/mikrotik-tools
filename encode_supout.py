@@ -17,7 +17,7 @@ def revtribit(content):
 		content= content + "\x00"
 		
 	result=""
-	for i in xrange(0, len(content) - 1,3):	
+	for i in range(0, len(content) - 1,3):	
 		goodtribit=0
 		badtribit=ord(content[i])*0x10000+ord(content[i+1])*0x100+ord(content[i+2])
 		for mangle in revtribitmap:
@@ -45,5 +45,5 @@ data=base64.b64encode(revtribit(data))
 data=data[:reallen]+"="*(len(data)-reallen)
 
 sys.stdout.write("--BEGIN ROUTEROS SUPOUT SECTION\r\n");
-sys.stdout.write("\r\n".join(data[i:i+76] for i in xrange(0, len(data), 76)))
+sys.stdout.write("\r\n".join(data[i:i+76] for i in range(0, len(data), 76)))
 sys.stdout.write("\r\n--END ROUTEROS SUPOUT SECTION\r\n");

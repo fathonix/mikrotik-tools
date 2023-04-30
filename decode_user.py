@@ -7,7 +7,7 @@ from socket import inet_ntop,AF_INET,AF_INET6
 from mt_dat_decoder import MTConfig
 
 def xor(data, key): 
-    return str(bytearray(a^b for a, b in zip(*map(bytearray, [data, key])))).split("\x00",2)[0]
+    return str(bytearray(a^b for a, b in zip(*list(map(bytearray, [data, key]))))).split("\x00",2)[0]
 
 def parseIPv4(data):
 	return inet_ntop(AF_INET, chr(data & 0xFF) + chr(data >> 8 & 0xFF)+ chr(data >> 16 & 0xFF)+ chr(data >> 24 & 0xFF))

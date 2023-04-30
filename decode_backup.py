@@ -45,7 +45,7 @@ with open(sys.argv[1], 'rb') as backup:
 		file_name = backup.read(unpack("<I",backup.read(4))[0])
 		index_cont = backup.read(unpack("<I",backup.read(4))[0])
 		data_cont = backup.read(unpack("<I",backup.read(4))[0])
-		print '%3d entries, %8d bytes,  ./%s' % (len(index_cont)/4, len(data_cont),file_name)
+		print('%3d entries, %8d bytes,  ./%s' % (len(index_cont)/4, len(data_cont),file_name))
 		
 		file_name=re.sub('\.{2,}','_',file_name); #would not wanna be writing all over the place
 

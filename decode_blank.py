@@ -3,7 +3,7 @@
 from mt_dat_decoder import MTConfig
 
 def onlyPrintable (s):
-	 return s if all(c in map(chr, range(32, 127)) for c in s) else "!{non-printable string of len %i}" % len(s)
+	 return s if all(c in list(map(chr, list(range(32, 127)))) for c in s) else "!{non-printable string of len %i}" % len(s)
 
 dir="."
 database="dhcp/client"
